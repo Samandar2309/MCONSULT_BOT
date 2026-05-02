@@ -21,6 +21,7 @@ async def about_us(message: Message):
         "Biz quyidagi yo‘nalishlarda faoliyat yuritamiz:\n"
         "• Buxgalteriya va moliyaviy hisob\n"
         "• IT va avtomatlashtirish yechimlari\n"
+        "• Xodimlar malakasini oshirish\n"
         "• Brokerlik xizmatlari\n"
         "• Marketing va sotuvni rivojlantirish\n"
         "• Litsenziya olishga amaliy yordam\n"

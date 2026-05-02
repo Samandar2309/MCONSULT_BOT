@@ -3,7 +3,7 @@ from aiogram import Router, F
 from aiogram.types import Message
 from sqlalchemy import select, func, and_
 
-from config import ADMIN_ID
+from config import ADMIN_IDS
 from bot.keyboards.reply import main_menu
 
 from bot.database.session import async_session_maker
@@ -14,7 +14,7 @@ router = Router()
 
 
 def is_admin(message: Message) -> bool:
-    return message.from_user.id == ADMIN_ID
+    return message.from_user.id in ADMIN_IDS
 
 
 # =====================================================

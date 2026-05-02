@@ -18,7 +18,11 @@ if not BOT_TOKEN:
 # =====================================================
 # 👑 ADMIN / OPERATOR SOZLAMALARI
 # =====================================================
-ADMIN_ID = int(os.getenv("ADMIN_ID", "5784897634"))
+_raw_admins = os.getenv("ADMIN_IDS")
+if not _raw_admins:
+    raise RuntimeError("❌ ADMIN_IDS topilmadi (.env faylni tekshiring)")
+
+ADMIN_IDS = list(map(int, _raw_admins.split(",")))
 OPERATOR_GROUP_ID = int(os.getenv("OPERATOR_GROUP_ID", "-1003633229619"))
 
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:12345678@localhost:5432/mc_mchj")

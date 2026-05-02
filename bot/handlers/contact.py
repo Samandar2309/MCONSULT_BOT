@@ -4,7 +4,7 @@ from aiogram import Router, F, Bot
 from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.fsm.context import FSMContext
 
-from config import ADMIN_ID, OPERATOR_GROUP_ID
+from config import ADMIN_IDS, OPERATOR_GROUP_ID
 from bot.states.contact import ContactState
 from bot.keyboards.reply import main_menu
 from bot.keyboards.inline import take_ticket_keyboard
@@ -187,7 +187,7 @@ async def process_confirm_yes(callback: CallbackQuery, state: FSMContext, bot: B
 
         await bot.send_message(OPERATOR_GROUP_ID, group_text, reply_markup=take_ticket_keyboard(ticket.id),
                                parse_mode="HTML")
-        await bot.send_message(ADMIN_ID, group_text, parse_mode="HTML")
+        await bot.send_message(ADMIN_IDS, group_text, parse_mode="HTML")
 
         await state.clear()
         await callback.message.edit_text(CONTACT_TEXTS["success"][lang])

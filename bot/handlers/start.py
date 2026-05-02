@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 
-from config import ADMIN_ID
+from config import ADMIN_IDS
 from bot.keyboards.inline import language_keyboard
 from bot.keyboards.reply import main_menu, admin_menu
 from bot.utils.storage import user_languages
@@ -15,7 +15,7 @@ router = Router()
 async def start_handler(message: Message):
     text = (
         "Assalomu alaykum!\n\n"
-        "👋 MConsult rasmiy botiga xush kelibsiz.\n\n"
+        "👋 Mag'zuna Consult rasmiy botiga xush kelibsiz.\n\n"
         "Biz biznesingizni rivojlantirish uchun professional "
         "va amaliy yechimlarni taklif qilamiz.\n\n"
         "🌐 Davom etish uchun tilni tanlang 👇"
@@ -54,7 +54,7 @@ async def change_language(message: Message):
 # 👑 /admin — ADMIN PANEL
 @router.message(F.text == "/admin")
 async def admin_panel(message: Message):
-    if message.from_user.id != ADMIN_ID:
+    if message.from_user.id != ADMIN_IDS:
         await message.answer("⛔ Sizda bu buyruq uchun ruxsat yo‘q")
         return
 

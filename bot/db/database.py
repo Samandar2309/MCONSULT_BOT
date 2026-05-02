@@ -8,26 +8,20 @@ from sqlalchemy.orm import DeclarativeBase
 from config import DATABASE_URL
 
 
-# =====================================================
-# 🔹 SQLALCHEMY BASE
-# =====================================================
+
 class Base(DeclarativeBase):
     pass
 
 
-# =====================================================
-# 🔹 ASYNC ENGINE
-# =====================================================
+
 engine = create_async_engine(
     DATABASE_URL,
-    echo=True,          # productionda False qilamiz
+    echo=True,          
     future=True,
 )
 
 
-# =====================================================
-# 🔹 SESSION FACTORY
-# =====================================================
+
 AsyncSessionLocal = async_sessionmaker(
     bind=engine,
     class_=AsyncSession,
@@ -35,9 +29,7 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 
-# =====================================================
-# 🔹 SESSION DEPENDENCY
-# =====================================================
+
 async def get_session() -> AsyncSession:
     async with AsyncSessionLocal() as session:
         yield session

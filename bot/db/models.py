@@ -18,9 +18,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from bot.database.base import Base
 
 
-# =====================================================
-# 🔹 TICKET STATUS (ENUM)
-# =====================================================
+
 class TicketStatus(str, Enum):
     NEW = "new"
     IN_PROGRESS = "in_progress"
@@ -28,13 +26,9 @@ class TicketStatus(str, Enum):
     REJECTED = "rejected"
 
 
-# =====================================================
-# 🎫 TICKET MODEL (POSTGRESQL)
-# =====================================================
 class Ticket(Base):
     __tablename__ = "tickets"
 
-    # 🔹 PRIMARY KEY
     id: Mapped[int] = mapped_column(
         Integer,
         primary_key=True,
@@ -42,7 +36,6 @@ class Ticket(Base):
         index=True,
     )
 
-    # 👤 MIJOZ MA'LUMOTLARI
     name: Mapped[str] = mapped_column(
         String(100),
         nullable=False,
@@ -60,20 +53,19 @@ class Ticket(Base):
         server_default="yo‘q",
     )
 
-    # 📝 MUROJAAT MATNI
     message: Mapped[str] = mapped_column(
         Text,
         nullable=False,
     )
 
-    # 🔄 STATUS
-    # 'native_enum=True' PostgreSQL uchun eng yaxshi amaliyotdir
     status: Mapped[TicketStatus] = mapped_column(
         SAEnum(
             TicketStatus,
             name="ticketstatus",
             native_enum=True,
             create_type=True,
+            # Use enum values (e.g. 'new') instead of member names (e.g. 'NEW')
+            values_callable=lambda enums: [e.value for e in enums],
         ),
         nullable=False,
         index=True,
@@ -81,7 +73,6 @@ class Ticket(Base):
         server_default=TicketStatus.NEW.value,
     )
 
-    # 👨‍💻 OPERATOR (BigInteger Telegram ID uchun shart)
     operator_id: Mapped[Optional[int]] = mapped_column(
         BigInteger,
         nullable=True,
@@ -91,10 +82,6 @@ class Ticket(Base):
         String(100),
         nullable=True,
     )
-
-    # ⏱ VAQT (Xatolikni oldini olish uchun ham SQL, ham Python darajasida default)
-    # default=datetime.utcnow -> Python orqali yozish uchun
-    # server_default=func.now() -> Agar SQL o'zi yozsa
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
@@ -110,9 +97,6 @@ class Ticket(Base):
         onupdate=func.now(),
     )
 
-    # -------------------------------------------------
-    # 🧾 DEBUG / LOG
-    # -------------------------------------------------
     def __repr__(self) -> str:
         return (
             f"<Ticket id={self.id} "
