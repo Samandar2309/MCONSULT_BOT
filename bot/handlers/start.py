@@ -54,7 +54,7 @@ async def change_language(message: Message):
 # 👑 /admin — ADMIN PANEL
 @router.message(F.text == "/admin")
 async def admin_panel(message: Message):
-    if message.from_user.id != ADMIN_IDS:
+    if message.from_user.id not in ADMIN_IDS:
         await message.answer("⛔ Sizda bu buyruq uchun ruxsat yo‘q")
         return
 

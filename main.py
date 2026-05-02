@@ -9,6 +9,7 @@ from config import BOT_TOKEN
 from bot.database.base import Base
 from bot.database.session import engine
 from bot.handlers import start, menu, services, contact, operator, admin
+from bot.middleware import BotMiddleware
 
 # ⬇️ Jadvallarni yaratish funksiyasi
 async def init_db():
@@ -39,6 +40,10 @@ async def main():
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
     dp = create_dispatcher()
+
+    # ⬇️ Middleware'ni qo'shamiz bot'ni aksesga qilish uchun
+    dp.message.middleware(BotMiddleware(bot))
+    dp.callback_query.middleware(BotMiddleware(bot))
 
     print("🤖 MC_MCHJ (MConsult) bot ishga tushdi...")
     await dp.start_polling(bot)

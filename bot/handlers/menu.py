@@ -16,11 +16,12 @@ async def about_us(message: Message):
     lang = user_languages.get(message.from_user.id, "uz")
 
     text_uz = (
-        "🏢 *MConsult haqida*\n\n"
-        "MConsult — bu biznes uchun kompleks xizmatlar markazi.\n\n"
+        "🏢 *Mag'zuna Consult haqida*\n\n"
+        "Mag'zuna Consult — bu biznes uchun kompleks xizmatlar markazi.\n\n"
         "Biz quyidagi yo‘nalishlarda faoliyat yuritamiz:\n"
         "• Buxgalteriya va moliyaviy hisob\n"
         "• IT va avtomatlashtirish yechimlari\n"
+        "• Xodimlarning malakasini oshirish\n"
         "• Xodimlar malakasini oshirish\n"
         "• Brokerlik xizmatlari\n"
         "• Marketing va sotuvni rivojlantirish\n"
@@ -30,11 +31,12 @@ async def about_us(message: Message):
     )
 
     text_ru = (
-        "🏢 *О компании MConsult*\n\n"
-        "MConsult — это центр комплексных услуг для бизнеса.\n\n"
+        "🏢 *О компании Mag'zuna Consult*\n\n"
+        "Mag'zuna Consult — это центр комплексных услуг для бизнеса.\n\n"
         "Основные направления нашей деятельности:\n"
         "• Бухгалтерский и финансовый учет\n"
         "• IT и решения по автоматизации\n"
+        "• Повышение квалификации\n"
         "• Брокерские услуги\n"
         "• Маркетинг и развитие продаж\n"
         "• Практическая помощь в получении лицензий\n"

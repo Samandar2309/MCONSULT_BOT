@@ -63,8 +63,9 @@ class Ticket(Base):
             TicketStatus,
             name="ticketstatus",
             native_enum=True,
-            create_type=True,
-            # Use enum values (e.g. 'new') instead of member names (e.g. 'NEW')
+            create_type=False,
+            validate_strings=True,
+            # Важно: SQLAlchemy должен использовать .value вместо имён членов
             values_callable=lambda enums: [e.value for e in enums],
         ),
         nullable=False,

@@ -162,10 +162,13 @@ async def get_message(message: Message, state: FSMContext):
 # ✅ TASDIQLASH VA SAQLASH
 # =====================================================
 @router.callback_query(ContactState.confirm, F.data == "confirm_yes")
-async def process_confirm_yes(callback: CallbackQuery, state: FSMContext, bot: Bot):
+async def process_confirm_yes(callback: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     lang = user_languages.get(callback.from_user.id, "uz")
-    username = f"@{callback.from_user.username}" if callback.from_user.username else "yo‘q"
+    username = f"@{callback.from_user.username}" if callback.from_user.username else "yo'q"
+
+    # Получаем бота из контекста callback'а (встроенный способ в aiogram 3.x)
+    bot = callback.bot
 
     try:
         async with async_session_maker() as session:
@@ -187,7 +190,12 @@ async def process_confirm_yes(callback: CallbackQuery, state: FSMContext, bot: B
 
         await bot.send_message(OPERATOR_GROUP_ID, group_text, reply_markup=take_ticket_keyboard(ticket.id),
                                parse_mode="HTML")
-        await bot.send_message(ADMIN_IDS, group_text, parse_mode="HTML")
+        # Отправить сообщение каждому админу отдельно (с обработкой ошибок)
+        for admin_id in ADMIN_IDS:
+            try:
+                await bot.send_message(admin_id, group_text, parse_mode="HTML")
+            except Exception as admin_error:
+                logging.warning(f"⚠️ Не удалось отправить админу {admin_id}: {admin_error}")
 
         await state.clear()
         await callback.message.edit_text(CONTACT_TEXTS["success"][lang])
